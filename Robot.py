@@ -29,11 +29,14 @@ def print_menu():			#Prints menu to terminal
 def print_menu_2():
     print (30 * "-" , "MENU" , 30 * "-")
     print ("1. Straight")
-    print ("2. Right Turn")
-    print ("3. Right wheel only")
-    print ("4. Left wheel only")
-    print ("5. Exit")
+    print ("2. Reverse")
+    print ("3. Right Turn")
+    print ("4. Left Turn")
+    print ("5. Right wheel only")
+    print ("6. Left wheel only")
+    print ("7. Exit")
     print (67 * "-")
+
 def Straight(Dist,speed):		#Forward Function
     docommand(robot, "setmotor lwheeldist " + Dist + " rwheeldist " + Dist + " speed " + str(speed))
 
@@ -104,10 +107,10 @@ def QueueFunction():
     while switch:
         switch=False
         print_menu_2()
-        choice = input("Enter your choice [1-5]: ")
+        choice = input("Enter your choice [1-7]: ")
         if choice=='1':     		
-            print ("Figure 8 has been selected")
-            Dist= input("Enter your Distance for straights (mm): ")
+            print("Straight has been selected")
+            Dist= input("Enter your Distance for forward (mm): ")
             dist=int(Dist)#convert to int
             speed=Speed_Check()
             timeT=Time_Delay(dist,speed)
@@ -119,19 +122,40 @@ def QueueFunction():
             functionQ['distance']=Dist#stores distance for calling function later
             functionQ['time']=timeT
             return(functionQ)
-            
         elif choice=='2':
-            print ("Menu 2 has been selected")
+            print("Reverse has been selected")
+            Dist= input("Enter your Distance for reverse (mm): ")
+            dist=int(Dist)#convert to int
+            #Dist=str(-dist)
+            speed=Speed_Check()
+            timeT=Time_Delay(dist,speed)
+            #speed= input("Enter your Speed (1-250): ")
+            #Straight(Dist,speed)
+            switch=False
+            functionQ['function']=Reverse#stores beginning of function without function call
+            functionQ['speed']=speed#stores the speed for use when calling function later
+            functionQ['distance']=Dist#stores distance for calling function later
+            functionQ['time']=timeT
+            return(functionQ)
+        elif choice=='3':
+            print ("Right turn has been selected")
             time.sleep(0.5)
             #Right_Turn()
             switch=False
             functionQ['function']=Right_Turn#stores beginning of function without function call
             functionQ['time']=3
             return(functionQ)
-        
-        elif choice=='3':
-            print ("Menu 3 has been selected")
-            Dist= input("Enter your Distance for straights (mm): ")
+        elif choice=='4':
+            print ("Left turn has been selected")
+            time.sleep(0.5)
+            #Left_Turn()
+            switch=False
+            functionQ['function']=Left_Turn#stores beginning of function without function call
+            functionQ['time']=3
+            return(functionQ)
+        elif choice=='5':
+            print ("Right wheel only has been selected")
+            Dist= input("Enter your Distance for right wheel only (mm): ")
             dist=int(Dist)
             #Right_Wheel_Only(Dist)
             switch=False
@@ -139,10 +163,10 @@ def QueueFunction():
             functionQ['distance']=dist #stores the distance for use when calling the function
             functionQ['time']=3
             return(functionQ)
-            
-        elif choice=='4':
+
+        elif choice=='6':
             print ("Menu 4 has been selected")
-            Dist= input("Enter your Distance for straights (mm): ")
+            Dist= input("Enter your Distance for left wheel only (mm): ")
             dist=int(Dist)
             #Left_Wheel_Only(Dist)
             switch=False
@@ -150,8 +174,8 @@ def QueueFunction():
             functionQ['distance']=dist#stores the distance for use when calling the function
             functionQ['time']=3
             return(functionQ)
-            
-        elif choice=='5':
+
+        elif choice=='7':
             print ("List Compiled")
             return(False)
         else:
