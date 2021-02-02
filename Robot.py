@@ -1,16 +1,15 @@
 print("Launching Neato Robot Controller")
-#import serial
+import serial
 import time
 
 usb = '/dev/ttyACM0'			#User specified port (ACM0)
 print("Using Serial Port: " + usb)	#Print to user which port is being used	
-robot = "robot"		#Establishes connection via serial port
+robot = serial.Serial(usb)		#Establishes connection via serial port
 print("Serial Connection Established")	#Print to user confirmation of connection
 hold = 0
 
 def docommand(port, command):		#Sends encoded command to bot 		
-    print(command) 
-
+    port.write((command + '\n').encode()) 
 docommand(robot, 'testmode on')		#Turns on testmode (required to send commands)
 print('TestMode Enabled')		#Prints to user confirmation
 docommand(robot, 'playsound soundid 1')	#Plays sound for my enjoyment
